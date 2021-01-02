@@ -29,3 +29,39 @@ participant 	completion 	return
 
 예제 #3
 "mislav"는 참여자 명단에는 두 명이 있지만, 완주자 명단에는 한 명밖에 없기 때문에 한명은 완주하지 못했습니다.
+
+
+#include <unordered_map>
+
+using namespace std;
+
+string solution(vector<string> participant, vector<string> completion) {
+    string answer = "";
+    unordered_map<string, int> strMap;
+    for(auto elem : completion)
+    {
+        if(strMap.end() == strMap.find(elem))
+            strMap.insert(make_pair(elem, 1));
+        else
+            strMap[elem]++;
+    }
+
+    for(auto elem : participant)
+    {
+        if(strMap.end() == strMap.find(elem))
+        {
+            answer = elem;
+            break;
+        }
+        else
+        {
+            strMap[elem]--;
+            if(strMap[elem] < 0)
+            {
+                answer = elem;
+                break;
+            }
+        }
+    }
+    return answer;
+}
